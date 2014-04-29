@@ -31,13 +31,15 @@ public class ArtistTrackCreator {
 
 			br.readLine();
 			int i = 0;
+			boolean first = true;
 			while ((strLine = br.readLine()) != null) {
 				String[] split = strLine.split("\\t");
 				map.put(split[0], split[1] + "\t" + split[2]);
 				++i;
 				if (i == HASH_MAP_SIZE) {
 					System.out.println(i);
-					updateFile(map);
+					updateFile(map, first);
+					first=false;
 					i = 0;
 				}
 			}
@@ -56,7 +58,7 @@ public class ArtistTrackCreator {
 
 	}
 
-	public static void updateFile(HashMap<String, String> mapmap) {
+	public static void updateFile(HashMap<String, String> mapmap, boolean first) {
 		File fileOut = new File("artist_medium_release.csv");
 		File fileArtistTrack = new File("artist_track.csv");
 
@@ -86,14 +88,13 @@ public class ArtistTrackCreator {
 			String strLine;
 
 			br.readLine();
+			if(first) ps.println("ArtistID\tRecordingID\tMediumID" );
+			
 			while ((strLine = br.readLine()) != null) {
 				String[] split = strLine.split("\\t");
-				StringBuilder outLine = new StringBuilder(mapmap.get(split[0]));
-				for (int i = 0; i < split.length - 1; ++i) {
-					outLine.append("\t" + split[i]);
-				}
-				outLine.append("\n");
-
+				StringBuilder outLine = new StringBuilder(split[0]);
+				outLine.append(mapmap.get(split[1]));
+				
 				ps.println(outLine.toString());
 
 			}
