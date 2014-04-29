@@ -16,7 +16,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 
 public class ArtistTrackCreator {
-	public final static int HASH_MAP_SIZE = 1650000;
+	public final static int HASH_MAP_SIZE = 100000;
 
 	static HashMap<String, String> mastaMap(File file) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -39,8 +39,9 @@ public class ArtistTrackCreator {
 				if (i == HASH_MAP_SIZE) {
 					System.out.println(i);
 					updateFile(map, first);
-					first=false;
+					first = false;
 					i = 0;
+					map.clear();
 				}
 			}
 
@@ -54,7 +55,7 @@ public class ArtistTrackCreator {
 
 	public static void main(String[] args) {
 		File fileTrack = new File("track.csv");
-		 mastaMap(fileTrack);
+		mastaMap(fileTrack);
 
 	}
 
@@ -88,16 +89,22 @@ public class ArtistTrackCreator {
 			String strLine;
 
 			br.readLine();
-			if(first) ps.println("ArtistID\tRecordingID\tMediumID" );
-			
+			if (first)
+				ps.println("ArtistID\tRecordingID\tMediumID");
+
 			while ((strLine = br.readLine()) != null) {
 				String[] split = strLine.split("\\t");
-				StringBuilder outLine = new StringBuilder(split[0]);
-				outLine.append(mapmap.get(split[1]));
-				
-				ps.println(outLine.toString());
+				if (mapmap.get(split[1]) != null) {
+					StringBuilder outLine = new StringBuilder(split[0]);
+					outLine.append("\t"+ mapmap.get(split[1]));
+					ps.println(outLine.toString());
+
+				}
 
 			}
+			
+			ps.close();
+			br.close();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
