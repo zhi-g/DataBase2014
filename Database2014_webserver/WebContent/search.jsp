@@ -28,18 +28,6 @@
 							value="artist"> <input type="submit" value="GO" />
 					</form>
 				</div>
-			</div>
-			<div class="section">
-				<div class="article">
-					<h2>Genre</h2>
-					<form action="list.jsp">
-						<input type="text" name="nameFilter" placeholder="Name"> <input
-							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="genre"> <input type="submit" value="GO" />
-					</form>
-				</div>
-			</div>
-			<div class="section">
 				<div class="article">
 					<h2>Artists</h2>
 					<form action="list.jsp">
@@ -54,6 +42,14 @@
 				</div>
 			</div>
 			<div class="section">
+				<div class="article">
+					<h2>Genre</h2>
+					<form action="list.jsp">
+						<input type="text" name="nameFilter" placeholder="Name"> <input
+							style="visibility: hidden; width: 0px;" type="text" name="table"
+							value="genre"> <input type="submit" value="GO" />
+					</form>
+				</div>
 				<div class="article">
 					<h2>Artists</h2>
 					<form action="list.jsp">

@@ -27,7 +27,7 @@
 					</p>
 					<p>
 						<%
-							out.println(OracleDatabase.SINGLE.getFirstTenElementOfALBUM());
+							out.println(OracleDatabase.SINGLE.getTenRandomSwissArtists());
 						%>
 					</p>
 					<!--

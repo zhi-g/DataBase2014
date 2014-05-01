@@ -13,7 +13,7 @@ public enum OracleDatabase {
 
 	private Connection mConnection;
 
-	public String getFirstTenElementOfALBUM() throws SQLException {
+	public String getTenRandomSwissArtists() throws SQLException {
 		if (null == mConnection) {
 			return null;
 		}
@@ -21,18 +21,17 @@ public enum OracleDatabase {
 		String result = "";
 
 		Statement stmt = null;
-		String query = "select ALBUMID, FORMAT, RELEASENAME from ALBUM";
+		String query = "SELECT a.name "
+				+ "FROM artist a, area r "
+				+ "WHERE a.areaid = r.id AND r.name = 'Switzerland';";
 
 		try {
 			stmt = mConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			int count = 0;
 			while (rs.next() && count < 10) {
-				int albumID = rs.getInt("ALBUMID");
-				String format = rs.getString("FORMAT");
-				String releaseName = rs.getString("RELEASENAME");
-				result = result + albumID + ", " + format + ", " + releaseName
-						+ "<br/>";
+				String name = rs.getString("a.name");
+				result = result + name + "<br/>";
 				count++;
 			}
 		} catch (SQLException e) {

@@ -7,11 +7,8 @@
 	<%
 		/*Here we insert new data when needed*/
 		if(null!=request.getParameter("table")){
-			switch(request.getParameter("table")) {
-				case "artist":
-					//pass the HttpServletRequest to the good function
-					break;
-			}
+			if(request.getParameter("table").equals("artist")){}
+				//inserting into artists
 		}
 	%>
 	
@@ -40,6 +37,18 @@
 							value="artist"> <input type="submit" value="GO" />
 					</form>
 				</div>
+				<div class="article">
+					<h2>Artists</h2>
+					<form action="list.jsp">
+						<input type="text" name="nameFilter" placeholder="Name"> <input
+							type="text" name="typeFilter" placeholder="Type"> <input
+							type="text" name="genderFilter" placeholder="Gender"> <input
+							type="text" name="areaFilter" placeholder="Area"> <input
+							type="text" name="genreFilter" placeholder="Genre"> <input
+							style="visibility: hidden; width: 0px;" type="text" name="table"
+							value="artist"> <input type="submit" value="GO" />
+					</form>
+				</div>
 			</div>
 			<div class="section">
 				<div class="article">
@@ -50,8 +59,6 @@
 							value="genre"> <input type="submit" value="GO" />
 					</form>
 				</div>
-			</div>
-			<div class="section">
 				<div class="article">
 					<h2>Artists</h2>
 					<form action="list.jsp">
@@ -65,19 +72,6 @@
 					</form>
 				</div>
 			</div>
-			<div class="section">
-				<div class="article">
-					<h2>Artists</h2>
-					<form action="list.jsp">
-						<input type="text" name="nameFilter" placeholder="Name"> <input
-							type="text" name="typeFilter" placeholder="Type"> <input
-							type="text" name="genderFilter" placeholder="Gender"> <input
-							type="text" name="areaFilter" placeholder="Area"> <input
-							type="text" name="genreFilter" placeholder="Genre"> <input
-							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="artist"> <input type="submit" value="GO" />
-					</form>
-				</div>
 			</div>
 		</div>
 	</div>
