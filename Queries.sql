@@ -72,3 +72,11 @@ select r1.name from (Select Area.name, area.id, count(DISTINCT Artist.name) AS c
 						group BY area.name, area.id) r2 
 where countFemale > countMale and r1.id = r2.id;
 
+--Query G:
+select album.* from (
+select mediumid, count(t.id)
+from track t
+group by t.mediumid
+having  count(t.id) >=  (select max(count(t1.id))
+                            from track t1
+                            group by t1.mediumid)), album where mediumid = album.id;
