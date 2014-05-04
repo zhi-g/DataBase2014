@@ -37,3 +37,16 @@ Query B: Print the names of areas with the highest number male artists, female a
     order by countRecordedTracks desc 
   ), artist r where r.id = artistid and r.type = 'Group'
 ) where rownum <=10;
+
+
+Query F: List all cities which have more female than male artists.
+select r1.name from (Select Area.name, area.id, count(DISTINCT Artist.name) AS countFemale 
+						From Artist, Area 
+						WHERE Artist.gender='Female' AND Artist.areaID=Area.ID 
+						group BY area.name, area.id) r1,
+					(Select Area.name, area.id, count(DISTINCT Artist.name) AS countMale 
+						From Artist, Area 
+						WHERE Artist.gender='Male' 
+						AND Artist.areaID=Area.ID 
+						group BY area.name, area.id) r2 
+where countFemale > countMale and r1.id = r2.id;
