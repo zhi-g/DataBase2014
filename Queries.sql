@@ -37,3 +37,13 @@ Query B: Print the names of areas with the highest number male artists, female a
     order by countRecordedTracks desc 
   ), artist r where r.id = artistid and r.type = 'Group'
 ) where rownum <=10;
+
+
+Query E: 
+Select * 
+From(Select (count(DISTINCT Genre.name)) AS countGenre 
+	From Artist Art,Artist_genre AG, Genre Genre 
+	WHERE art.gender = 'Female' AND art.id=ag.artistid AND ag.genreID=genre.id 
+	group BY art.name 
+	ORDER BY countGenre DESC) 
+where rownum<= 1;
