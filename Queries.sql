@@ -38,6 +38,17 @@ select artist.name from artist, area  where area.id = areaid and area.name = 'Sw
   ), artist r where r.id = artistid and r.type = 'Group'
 ) where rownum <=10;
 
+--Query D:
+select * from (
+select a.name from
+  (select art.artistid, count(distinct a1.releasename) as countRecordings
+  from album a1, track t, artist_song art
+  where art.trackid = t.id and t.recordingid = a1.id
+  group by art.artistid
+  order by countRecordings desc) res, artist a
+  where a.id =res.artistid and a.type = 'Group'
+) where rownum<=10;
+
 
 --Query E: 
 Select * 
@@ -60,3 +71,4 @@ select r1.name from (Select Area.name, area.id, count(DISTINCT Artist.name) AS c
 						AND Artist.areaID=Area.ID 
 						group BY area.name, area.id) r2 
 where countFemale > countMale and r1.id = r2.id;
+
