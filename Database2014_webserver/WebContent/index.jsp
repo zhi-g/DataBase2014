@@ -21,44 +21,27 @@
 			<div class="section">
 				<div class="article">
 					<h2>Swiss artists</h2>
-					<p>
-						Ten random artists from Switzerland. <a href="#">See all of
-							them</a>
-					</p>
+					<h4>
+						Ten artists from Switzerland. <a
+							href="list.jsp?nameFilter=&typeFilter=&genderFilter=&areaFilter=Switzerland&genreFilter=&table=artist&outSize=max">See
+							all of them</a>
+					</h4>
 					<p>
 						<%
-							out.println(OracleDatabase.SINGLE.getTenRandomSwissArtists());
+							out.println(OracleDatabase.SINGLE.queryA());
 						%>
 					</p>
-					<!--
-					<table>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th>Area</th>
-						</tr>
-						<tr>
-						 	<td>Eluveite</td>
-							<td>Group</td>
-							<td>Zürich</td>
-	  					</tr>
-					</table>
-					-->
 				</div>
 				<div class="article">
 					<h2>top tens</h2>
-					<p>Top ten groups with most records and top ten groups with
-						most releases.</p>
-					<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
-						prece frustra temptata, sulcatis lateribus mortisque metu admoto
-						turpi confessione cogitatorum socium, quae nulla erant, fuisse
-						firmavit cum nec vidisset quicquam nec audisset penitus expers
-						forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
-						in eodem gradu constantiae stetit latrocinium illud esse, non
-						iudicium clamans. Sed si ille hac tam eximia fortuna propter
-						utilitatem rei publicae frui non properat, ut omnia illa
-						conficiat, quid ego, senator, facere debeo, quem, etiamsi ille
-						aliud vellet, rei publicae consulere oporteret?</p>
+					<h4>Top ten groups with most tracks and top ten groups with
+						most releases.</h4>
+					<p>
+						<b>Most tracks:</b>
+						<%
+							out.println(OracleDatabase.SINGLE.queryC());
+						%>
+					</p>
 				</div>
 				<div class="article">
 					<h2>track-boulimic</h2>
@@ -78,18 +61,21 @@
 			<div class="section">
 				<div class="article">
 					<h2>top areas</h2>
-					<h3>Areas with most males, females and groups, with artist
-						counts per type for each.</h3>
-					<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
-						prece frustra temptata, sulcatis lateribus mortisque metu admoto
-						turpi confessione cogitatorum socium, quae nulla erant, fuisse
-						firmavit cum nec vidisset quicquam nec audisset penitus expers
-						forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
-						in eodem gradu constantiae stetit latrocinium illud esse, non
-						iudicium clamans. Sed si ille hac tam eximia fortuna propter
-						utilitatem rei publicae frui non properat, ut omnia illa
-						conficiat, quid ego, senator, facere debeo, quem, etiamsi ille
-						aliud vellet, rei publicae consulere oporteret?</p>
+					<h4>Areas with most males, females and groups, with artist
+						counts per type for each.</h4>
+					<p>
+						<b>Groups: </b>
+						<%
+							out.println(OracleDatabase.SINGLE.queryB1());
+						%><br /> <b>Females: </b>
+						<%
+							out.println(OracleDatabase.SINGLE.queryB2());
+						%>
+						<br /> <b>Males: </b>
+						<%
+							out.println(OracleDatabase.SINGLE.queryB3());
+						%>
+					</p>
 				</div>
 				<div class="article">
 					<h2>genre-wide woman</h2>

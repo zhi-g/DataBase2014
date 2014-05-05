@@ -3,14 +3,19 @@ package graphical.helpers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import database.connection.SQLHelper;
+
 public class TablesToHTML {
 	
-	public static String artistsResultSetToHTML(ResultSet resultSet) {
+	public static String artistsResultSetToHTML(ResultSet resultSet, int tableSize) {
 		if (null==resultSet) {
 			return "<h3>Error while computing query</h3>";
 		}
+		if (tableSize < 0) {
+			tableSize = Integer.MAX_VALUE;
+		}
 		
-		String result = "<tbale><tr>"
+		String result = "<table id=\"results\"><tr>"
 				+ "<th>Name</th>"
 				+ "<th>Type</th>"
 				+ "<th>Gender</th>"
@@ -20,12 +25,12 @@ public class TablesToHTML {
 		
 		int count = 0;
 		try {
-			while (resultSet.next() && count < 100) {
-				String name = resultSet.getString("Artist.name");
-				String type = resultSet.getString("Artist.type");
-				String gender = resultSet.getString("Artist.gender");
-				String area = resultSet.getString("Area.name");
-				String genre = resultSet.getString("Genre.name");
+			while (resultSet.next() && count < tableSize) {
+				String name = resultSet.getString(1);
+				String type = resultSet.getString(2);
+				String gender = resultSet.getString(3);
+				String area = resultSet.getString(4);
+				String genre = resultSet.getString(5);
 				String row = "<tr>"
 						+ "<td>" + name +"</td>"
 						+ "<td>" + type + "</td>"
@@ -38,6 +43,7 @@ public class TablesToHTML {
 			}
 		} catch (SQLException e) {
 			System.err.println("Error while retrieving an element: "+e.getMessage());
+			SQLHelper.printSQLException(e);
 			return "<h3>Error while computing query</h3>";
 		}
 
@@ -45,19 +51,22 @@ public class TablesToHTML {
 		return result;
 	}
 	
-	public static String genreResultSetToHTML(ResultSet resultSet) {
+	public static String genreResultSetToHTML(ResultSet resultSet, int tableSize) {
 		if (null==resultSet) {
 			return "<h3>Error while computing query</h3>";
 		}
+		if (tableSize < 0) {
+			tableSize = Integer.MAX_VALUE;
+		}
 		
-		String result = "<tbale><tr>"
+		String result = "<table id=\"results\"><tr>"
 				+ "<th>Name</th>"
 				+ "</tr>";
 		
 		int count = 0;
 		try {
-			while (resultSet.next() && count < 100) {
-				String genre = resultSet.getString("Genre.name");
+			while (resultSet.next() && count < tableSize) {
+				String genre = resultSet.getString("name");
 				String row = "<tr>"
 						+ "<td>" + genre + "</td>"
 						+ "</tr>";
@@ -65,7 +74,8 @@ public class TablesToHTML {
 				count++;
 			}
 		} catch (SQLException e) {
-			System.err.println("Error while retrieving an element: "+e.getMessage());
+			System.err.println("Error while retrieving an element");
+			SQLHelper.printSQLException(e);
 			return "<h3>Error while computing query</h3>";
 		}
 
