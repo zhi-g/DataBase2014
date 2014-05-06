@@ -7,13 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>DB2014 - Group 5</title>
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
 	<%@ include file="header.jsp"%>
 	<div id="body">
-	<h1>Search into data</h1>
+		<h1>Search into data</h1>
 		<div>
 			<div class="section">
 				<div class="article">
@@ -25,7 +25,13 @@
 							type="text" name="areaFilter" placeholder="Area"> <input
 							type="text" name="genreFilter" placeholder="Genre"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="artist"> <input type="submit" value="GO" />
+							value="artist"> <input type="submit" value="GO" /> <select
+							name="outSize">
+							<option value="10">10</option>
+							<option value="100">100</option>
+							<option value="1000">1000</option>
+							<option value="max">Maximum</option>
+						</select>
 					</form>
 				</div>
 				<div class="article">

@@ -7,33 +7,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>DB2014 - Group 5</title>
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	
-	<%
-		if(request.getParameter("table")=="Artist"){
-			ResultSet rs = OracleDatabase.SINGLE.filterArtists(
-					request.getParameter("nameFilter"),
-					request.getParameter("typeFilter"),
-					request.getParameter("genderFilter"),
-					request.getParameter("areaFilter"),
-					request.getParameter("genreFilter"));
-			out.println(TablesToHTML.artistsResultSetToHTML(rs));
-		}
-	%>
-	<ul>
-		<li><p>
-				<b>Search request:</b>
-				<%=request.getParameter("value")%>
-			</p></li>
-		<li><p>
-				<b>In table:</b>
-				<%=request.getParameter("table")%>
-			</p></li>
-	</ul>
+
+	<div class="header">
+		<div class="article">
+			<%
+				int tableSize = 100;
+				if (request.getParameter("outSize").equals("max")) {
+					tableSize = Integer.MAX_VALUE;
+				} else if (request.getParameter("outSize").equals("1000")) {
+					tableSize = 1000;
+				} else if (request.getParameter("outSize").equals("10")) {
+					tableSize = 10;
+				}
+
+				if (request.getParameter("table").equals("artist")) {
+					out.println("<h1>Browsing artists</h1>");
+					ResultSet rs = OracleDatabase.SINGLE.filterArtists(
+							request.getParameter("nameFilter"),
+							request.getParameter("typeFilter"),
+							request.getParameter("genderFilter"),
+							request.getParameter("areaFilter"),
+							request.getParameter("genreFilter"));
+					out.println(TablesToHTML.artistsResultSetToHTML(rs, tableSize));
+				}
+				if (request.getParameter("table").equals("genre")) {
+					out.println("<h1>Browsing genres</h1>");
+					ResultSet rs = OracleDatabase.SINGLE.filterGenre(request
+							.getParameter("nameFilter"));
+					out.println(TablesToHTML.genreResultSetToHTML(rs, tableSize));
+				}
+			%>
+		</div>
+	</div>
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
