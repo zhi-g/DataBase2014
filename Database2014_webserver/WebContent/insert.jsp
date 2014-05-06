@@ -3,7 +3,7 @@
 <%@page import="database.connection.OracleDatabase"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
+<!-- Hello ploplop -->
 	<%
 		/*Here we insert new data when needed*/
 		if(null!=request.getParameter("table")){
