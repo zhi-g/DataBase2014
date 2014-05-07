@@ -20,7 +20,7 @@
 					<h2>Artists</h2>
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
-							type="text" name="typeFilter" placeholder="Type"> <input
+							type="text" name="typeFilter" placeholder="Type"> <br/> <input
 							type="text" name="genderFilter" placeholder="Gender"> <input
 							type="text" name="areaFilter" placeholder="Area"> <br />
 						<input style="visibility: hidden; width: 0px;" type="text"

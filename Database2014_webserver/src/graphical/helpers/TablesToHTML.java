@@ -97,8 +97,69 @@ public class TablesToHTML {
 		try {
 			while (resultSet.next() && count < tableSize) {
 				String genre = resultSet.getString("name");
-				String row = "<tr><td><a href=\"list.jsp?genreFilter="
-						+ genre + "&table=artist\">" + genre + "</a></td></tr>";
+				String row = "<tr><td><a href=\"list.jsp?genreFilter=" + genre
+						+ "&table=artist\">" + genre + "</a></td></tr>";
+				result += row;
+				count++;
+			}
+		} catch (SQLException e) {
+			System.err.println("Error while retrieving an element");
+			SQLHelper.printSQLException(e);
+			return "<h3>Error while computing query</h3>";
+		}
+
+		result += "</table>";
+		return result;
+	}
+
+	public static String albumResultSetToHTML(ResultSet resultSet, int tableSize) {
+		if (null == resultSet) {
+			return "<h3>Error while computing query</h3>";
+		}
+		if (tableSize < 0) {
+			tableSize = Integer.MAX_VALUE;
+		}
+		String result = "<table id=\"results\"><tr>" + "<th>Album Name</th>"
+				+ "<th>Album Format</th>" + "</tr>";
+		int count = 0;
+		try {
+			while (resultSet.next() && count < tableSize) {
+				String name = resultSet.getString(1);
+				String format = resultSet.getString(2);
+				String row = "<tr>" + "<td>" + name + "</td>" + "<td>" + format
+						+ "</tr>";
+				result += row;
+				count++;
+			}
+		} catch (SQLException e) {
+			System.err.println("Error while retrieving an element: "
+					+ e.getMessage());
+			SQLHelper.printSQLException(e);
+			return "<h3>Error while computing query</h3>";
+		}
+		result += "</table>";
+		return result;
+	}
+
+	public static String trackResultSetToHTML(ResultSet resultSet, int tableSize) {
+		if (null == resultSet) {
+			return "<h3>Error while computing query</h3>";
+		}
+		if (tableSize < 0) {
+			tableSize = Integer.MAX_VALUE;
+		}
+
+		String result = "<table id=\"results\"><tr>" + "<th>Name</th>"
+				+ "<th>Length</th>" + "<th>Album</th>" + "<th>Position</th>"
+				+ "</tr>";
+
+		int count = 0;
+		try {
+			while (resultSet.next() && count < tableSize) {
+				String genre = resultSet.getString("name"); // TODO pas fini
+				String row = "<tr>" + "<td>" + genre + "</td>" + "<td>" + genre
+						+ "</td>" + "<td>" + genre + "</td>" + "<td>" + genre
+						+ "</td>" + "</tr>";
 				result += row;
 				count++;
 			}

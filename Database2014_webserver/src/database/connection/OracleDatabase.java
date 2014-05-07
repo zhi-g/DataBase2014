@@ -279,8 +279,6 @@ public enum OracleDatabase {
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Artist.name";
 
-		System.out.println("Query: " + query);
-
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -337,19 +335,53 @@ public enum OracleDatabase {
 		return rs;
 	}
 
+	public ResultSet filterAlbum(String Alb_name, String Format_name) {
+
+		/* QUERY GENERATION */
+		String query = "SELECT Album.releasename, Album.format FROM Album WHERE ";
+		if (!Alb_name.equals(""))
+			query += "Album.releasename like ? AND ";
+		if (!Format_name.equals(""))
+			query += "Album.format like ? AND ";
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += " ORDER BY Album.releasename";
+		System.out.println("Query: " + query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = mConnection.prepareStatement(query);
+			
+			/* Replacing the '?' */
+			int index = 1;
+			if (!Alb_name.equals("")) {
+				stmt.setString(index, "%" + Alb_name + "%");
+				index++;
+			}
+			if (!Format_name.equals("")) {
+				stmt.setString(index, "%" + Format_name + "%");
+				index++;
+			}
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.err.println("Could not execute query (on artists)");
+			SQLHelper.printSQLException(e);
+		}
+		return rs;
+	}
+
 	public ResultSet filterTrack(String trackName, String albumName) {
-		if (null==trackName || null==albumName) {
+		if (null == trackName || null == albumName) {
 			return null;
 		}
 
-		/* QUERY GENERATION */
+		/* QUERY GENERATION */ // TODO incorrect
 		String query = "SELECT Song.name, Song.length Album.name, Track.position FROM Song, Track, Album WHERE";
-		
+
 		if (!trackName.equals("")) {
 			query += "  Song.name like ? AND ";
 		}
 		if (!albumName.equals("")) {
-			query += "  Album.name like ?";
+			query += "  Album.name like ? AND ";
 		}
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += "ORDER BY Album.name";
@@ -358,15 +390,16 @@ public enum OracleDatabase {
 		ResultSet rs = null;
 		try {
 			stmt = mConnection.prepareStatement(query);
-			
+
 			int index = 1;
 			if (!trackName.equals("")) {
-				query += "  Song.name like ? AND ";
+				stmt.setString(index, trackName);
+				index++;
 			}
 			if (!albumName.equals("")) {
-				query += "  Album.name like ?";
+				stmt.setString(index, albumName);
 			}
-			
+
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			System.err.println("Could not execute query (on genre)");
