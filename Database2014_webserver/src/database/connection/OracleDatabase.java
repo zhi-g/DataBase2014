@@ -308,6 +308,9 @@ public enum OracleDatabase {
 	 * to filter according to genre
 	 */
 	public ResultSet filterArtists(String genreFilter) {
+		if (null == mConnection || null == genreFilter) {
+			return null;
+		}
 
 		// SQLHelper.inputSanitization(nameFilter);
 		// SQLHelper.inputSanitization(typeFilter);
@@ -350,6 +353,9 @@ public enum OracleDatabase {
 
 	public ResultSet filterArtists(String nameFilter, String typeFilter,
 			String genderFilter, String areaFilter) {
+		if (null == mConnection || null == nameFilter || null == typeFilter|| null == genderFilter || null == areaFilter) {
+			return null;
+		}
 
 		// SQLHelper.inputSanitization(nameFilter);
 		// SQLHelper.inputSanitization(typeFilter);
@@ -409,6 +415,12 @@ public enum OracleDatabase {
 	}
 
 	public ResultSet filterGenre(String nameFilter) {
+		if (null == mConnection || null == nameFilter) {
+			return null;
+		}
+		if (null == mConnection) {
+			return null;
+		}
 
 		/* QUERY GENERATION */
 		String query = "SELECT Genre.name FROM Genre";
@@ -432,6 +444,9 @@ public enum OracleDatabase {
 	}
 
 	public ResultSet filterAlbum(String Alb_name, String Artist_name, String Format_name) {
+		if (null == mConnection || null == Alb_name || null == Artist_name || null == Format_name) {
+			return null;
+		}
 
 		/* QUERY GENERATION */
 		String query = "SELECT UNIQUE album.releasename, artist.name, album.format FROM Album, artist_song,artist,track WHERE ";
@@ -477,7 +492,7 @@ public enum OracleDatabase {
 	}
 
 	public ResultSet filterTrack(String trackName, String albumName) {
-		if (null == trackName || null == albumName) {
+		if (null == mConnection || null == trackName || null == albumName) {
 			return null;
 		}
 

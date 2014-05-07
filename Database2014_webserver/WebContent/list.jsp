@@ -3,6 +3,9 @@
 <%@page import="database.connection.OracleDatabase"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	response.setContentType("text/html; charset=utf-8");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,8 +29,8 @@
 						tableSize = 10;
 					}
 				}
-				
-				if (null==request.getParameter("table")) {
+
+				if (null == request.getParameter("table")) {
 					out.println("<h1>Wow, you such a hacker!</h1>");
 				} else if (request.getParameter("table").equals("artist")) {
 					out.println("<h1>Browsing artists</h1>");
@@ -45,21 +48,19 @@
 						out.println(TablesToHTML.artistsResultSetToHTML(rs,
 								tableSize));
 					}
-				}else if (request.getParameter("table").equals("genre")) {
+				} else if (request.getParameter("table").equals("genre")) {
 					out.println("<h1>Browsing genres</h1>");
 					ResultSet rs = OracleDatabase.SINGLE.filterGenre(request
 							.getParameter("nameFilter"));
 					out.println(TablesToHTML.genreResultSetToHTML(rs, tableSize));
-				}
-				if (request.getParameter("table").equals("album")) {
+				} else if (request.getParameter("table").equals("album")) {
 					out.println("<h1>Browsing albums</h1>");
 					ResultSet rs = OracleDatabase.SINGLE.filterAlbum(
 							request.getParameter("nameFilter"),
 							request.getParameter("artistFilter"),
 							request.getParameter("formatFilter"));
 					out.println(TablesToHTML.albumResultSetToHTML(rs, tableSize));
-				}
-				if (request.getParameter("table").equals("track")) {
+				} else if (request.getParameter("table").equals("track")) {
 					out.println("<h1>Browsing tracks</h1>");
 					ResultSet rs = OracleDatabase.SINGLE.filterTrack(
 							request.getParameter("nameFilter"),
