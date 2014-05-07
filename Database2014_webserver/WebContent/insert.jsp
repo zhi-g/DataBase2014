@@ -16,7 +16,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>DB2014 - Group 5</title>
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>

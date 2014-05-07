@@ -10,27 +10,19 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	<div class="body">
-		<div>
-			<div class="section">
-				<div class="article">
-					<h2>Swiss artists</h2>
-					<p>
-						Ten random artists from Switzerland. <a href="#">See all of
-							them</a>
-					</p>
-					<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
-						prece frustra temptata, sulcatis lateribus mortisque metu admoto
-						turpi confessione cogitatorum socium, quae nulla erant, fuisse
-						firmavit cum nec vidisset quicquam nec audisset penitus expers
-						forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
-						in eodem gradu constantiae stetit latrocinium illud esse, non
-						iudicium clamans. Sed si ille hac tam eximia fortuna propter
-						utilitatem rei publicae frui non properat, ut omnia illa
-						conficiat, quid ego, senator, facere debeo, quem, etiamsi ille
-						aliud vellet, rei publicae consulere oporteret?</p>
-				</div>
-			</div>
+	<div class="header">
+		<div class="article" style="padding:50px;">
+			<h2>About us</h2>
+			<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
+				prece frustra temptata, sulcatis lateribus mortisque metu admoto
+				turpi confessione cogitatorum socium, quae nulla erant, fuisse
+				firmavit cum nec vidisset quicquam nec audisset penitus expers
+				forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
+				in eodem gradu constantiae stetit latrocinium illud esse, non
+				iudicium clamans. Sed si ille hac tam eximia fortuna propter
+				utilitatem rei publicae frui non properat, ut omnia illa conficiat,
+				quid ego, senator, facere debeo, quem, etiamsi ille aliud vellet,
+				rei publicae consulere oporteret?</p>
 		</div>
 	</div>
 

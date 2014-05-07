@@ -390,6 +390,7 @@ public enum OracleDatabase {
 			int index = 1;
 			if (!nameFilter.equals("")) {
 				stmt.setString(index, "%" + nameFilter + "%");
+				System.out.println("name in the query: "+nameFilter);
 				index++;
 			}
 			if (!typeFilter.equals("")) {
