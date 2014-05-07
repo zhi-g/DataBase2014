@@ -337,6 +337,45 @@ public enum OracleDatabase {
 		return rs;
 	}
 
+	public ResultSet filterTrack(String trackName, String albumName) {
+		if (null==trackName || null==albumName) {
+			return null;
+		}
+
+		/* QUERY GENERATION */
+		String query = "SELECT Song.name, Song.length Album.name, Track.position FROM Song, Track, Album WHERE";
+		
+		if (!trackName.equals("")) {
+			query += "  Song.name like ? AND ";
+		}
+		if (!albumName.equals("")) {
+			query += "  Album.name like ?";
+		}
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += "ORDER BY Album.name";
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = mConnection.prepareStatement(query);
+			
+			int index = 1;
+			if (!trackName.equals("")) {
+				query += "  Song.name like ? AND ";
+			}
+			if (!albumName.equals("")) {
+				query += "  Album.name like ?";
+			}
+			
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.err.println("Could not execute query (on genre)");
+			SQLHelper.printSQLException(e);
+		}
+
+		return rs;
+	}
+
 	/* Insert queries */
 	/*
 	 * public Status insertIntoGenre(int id, String name){ if (null ==
