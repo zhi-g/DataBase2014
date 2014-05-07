@@ -20,13 +20,12 @@
 					<h2>Artists</h2>
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
-							type="text" name="typeFilter" placeholder="Type"> <input
+							type="text" name="typeFilter" placeholder="Type"> <br/> <input
 							type="text" name="genderFilter" placeholder="Gender"> <input
-							type="text" name="areaFilter" placeholder="Area"> <input
-							type="text" name="genreFilter" placeholder="Genre"> <input
-							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="artist"> <input type="submit" value="GO" /> <select
-							name="outSize">
+							type="text" name="areaFilter" placeholder="Area"> <br />
+						<input style="visibility: hidden; width: 0px;" type="text"
+							name="table" value="artist"><input type="submit"
+							value="GO" /> <select name="outSize">
 							<option value="10">10</option>
 							<option value="100">100</option>
 							<option value="1000">1000</option>
@@ -35,15 +34,12 @@
 					</form>
 				</div>
 				<div class="article">
-					<h2>Artists</h2>
+					<h2>Albums</h2>
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
-							type="text" name="typeFilter" placeholder="Type"> <input
-							type="text" name="genderFilter" placeholder="Gender"> <input
-							type="text" name="areaFilter" placeholder="Area"> <input
-							type="text" name="genreFilter" placeholder="Genre"> <input
+							type="text" name="formatFilter" placeholder="Format"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="artist"> <input type="submit" value="GO" />
+							value="album"> <input type="submit" value="GO" />
 					</form>
 				</div>
 			</div>
@@ -57,15 +53,12 @@
 					</form>
 				</div>
 				<div class="article">
-					<h2>Artists</h2>
+					<h2>Track</h2>
 					<form action="list.jsp">
-						<input type="text" name="nameFilter" placeholder="Name"> <input
-							type="text" name="typeFilter" placeholder="Type"> <input
-							type="text" name="genderFilter" placeholder="Gender"> <input
-							type="text" name="areaFilter" placeholder="Area"> <input
-							type="text" name="genreFilter" placeholder="Genre"> <input
+						<input type="text" name="nameFilter" placeholder="Track name"> <input
+							type="text" name="releaseFilter" placeholder="Album name"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="artist"> <input type="submit" value="GO" />
+							value="track"> <input type="submit" value="GO" />
 					</form>
 				</div>
 			</div>

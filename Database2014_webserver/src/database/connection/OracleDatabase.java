@@ -304,8 +304,10 @@ public enum OracleDatabase {
 		return result;
 	}
 
-	public ResultSet filterArtists(String nameFilter, String typeFilter,
-			String genderFilter, String areaFilter, String genreFilter) {
+	/**
+	 * to filter according to genre
+	 */
+	public ResultSet filterArtists(String genreFilter) {
 
 		// SQLHelper.inputSanitization(nameFilter);
 		// SQLHelper.inputSanitization(typeFilter);
@@ -321,6 +323,46 @@ public enum OracleDatabase {
 		query += "Genre.ID=Artist_Genre.genreID AND ";
 		query += "Artist.areaID=Area.id AND ";
 
+		if (!genreFilter.equals(""))
+			query += "Genre.name like ? AND ";
+
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += " ORDER BY Artist.name";
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = mConnection.prepareStatement(query);
+
+			/* Replacing the '?' */
+			if (!genreFilter.equals("")) {
+				stmt.setString(1, "%" + genreFilter + "%");
+			}
+
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.err.println("Could not execute query (on artists)");
+			SQLHelper.printSQLException(e);
+		}
+
+		return rs;
+	}
+
+	public ResultSet filterArtists(String nameFilter, String typeFilter,
+			String genderFilter, String areaFilter) {
+
+		// SQLHelper.inputSanitization(nameFilter);
+		// SQLHelper.inputSanitization(typeFilter);
+		// SQLHelper.inputSanitization(genderFilter);
+		// SQLHelper.inputSanitization(areaFilter);
+		// SQLHelper.inputSanitization(genreFilter);
+
+		/* QUERY GENERATION */
+		String query = "SELECT Artist.name, Artist.type, Artist.gender, Area.name"
+				+ " FROM Artist,Area" + " WHERE ";
+
+		query += "Artist.areaID=Area.id AND ";
+
 		if (!nameFilter.equals(""))
 			query += "Artist.name like ? AND ";
 		if (!typeFilter.equals(""))
@@ -329,13 +371,9 @@ public enum OracleDatabase {
 			query += "Artist.gender like ? AND ";
 		if (!areaFilter.equals(""))
 			query += "Area.name like ? AND ";
-		if (!genreFilter.equals(""))
-			query += "Genre.name like ? AND ";
 
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Artist.name";
-
-		System.out.println("Query: " + query);
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -360,10 +398,6 @@ public enum OracleDatabase {
 				stmt.setString(index, "%" + areaFilter + "%");
 				index++;
 			}
-			if (!genreFilter.equals("")) {
-				stmt.setString(index, "%" + genreFilter + "%");
-				index++;
-			}
 
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
@@ -381,13 +415,87 @@ public enum OracleDatabase {
 		if (!nameFilter.equals("")) {
 			query += " WHERE Genre.name like ?";
 		}
-		query += " ORDER BY Genre.name";
+		query += "ORDER BY Genre.name";
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
 			stmt = mConnection.prepareStatement(query);
 			stmt.setString(1, "%" + nameFilter + "%");
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.err.println("Could not execute query (on genre)");
+			SQLHelper.printSQLException(e);
+		}
+
+		return rs;
+	}
+
+	public ResultSet filterAlbum(String Alb_name, String Format_name) {
+
+		/* QUERY GENERATION */
+		String query = "SELECT Album.releasename, Album.format FROM Album WHERE ";
+		if (!Alb_name.equals(""))
+			query += "Album.releasename like ? AND ";
+		if (!Format_name.equals(""))
+			query += "Album.format like ? AND ";
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += " ORDER BY Album.releasename";
+		System.out.println("Query: " + query);
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = mConnection.prepareStatement(query);
+			
+			/* Replacing the '?' */
+			int index = 1;
+			if (!Alb_name.equals("")) {
+				stmt.setString(index, "%" + Alb_name + "%");
+				index++;
+			}
+			if (!Format_name.equals("")) {
+				stmt.setString(index, "%" + Format_name + "%");
+				index++;
+			}
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.err.println("Could not execute query (on artists)");
+			SQLHelper.printSQLException(e);
+		}
+		return rs;
+	}
+
+	public ResultSet filterTrack(String trackName, String albumName) {
+		if (null == trackName || null == albumName) {
+			return null;
+		}
+
+		/* QUERY GENERATION */ // TODO incorrect
+		String query = "SELECT Song.name, Song.length Album.name, Track.position FROM Song, Track, Album WHERE";
+
+		if (!trackName.equals("")) {
+			query += "  Song.name like ? AND ";
+		}
+		if (!albumName.equals("")) {
+			query += "  Album.name like ? AND ";
+		}
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += "ORDER BY Album.name";
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = mConnection.prepareStatement(query);
+
+			int index = 1;
+			if (!trackName.equals("")) {
+				stmt.setString(index, trackName);
+				index++;
+			}
+			if (!albumName.equals("")) {
+				stmt.setString(index, albumName);
+			}
+
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			System.err.println("Could not execute query (on genre)");
