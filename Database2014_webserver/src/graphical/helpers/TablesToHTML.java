@@ -65,7 +65,8 @@ public class TablesToHTML {
 				String type = resultSet.getString(2);
 				String gender = resultSet.getString(3);
 				String area = resultSet.getString(4);
-				String row = "<tr>" + "<td>" + name + "</td>" + "<td>" + type
+				String row = "<tr>" + "<td><a href=\"list.jsp?nameFilter=&formatFilter=&artistFilter="+ name
+						+ "&table=album&outSize=max\">" + name + "</a>"+ "</td>" + "<td>" + type
 						+ "</td>" + "<td>" + gender + "</td>" + "<td>" + area
 						+ "</td>" + "</tr>";
 				result += row;
