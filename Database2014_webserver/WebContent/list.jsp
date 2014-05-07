@@ -55,6 +55,7 @@
 					out.println("<h1>Browsing albums</h1>");
 					ResultSet rs = OracleDatabase.SINGLE.filterAlbum(
 							request.getParameter("nameFilter"),
+							request.getParameter("artistFilter"),
 							request.getParameter("formatFilter"));
 					out.println(TablesToHTML.albumResultSetToHTML(rs, tableSize));
 				}

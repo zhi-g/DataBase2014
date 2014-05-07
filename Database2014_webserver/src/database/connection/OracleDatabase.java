@@ -431,7 +431,7 @@ public enum OracleDatabase {
 		return rs;
 	}
 
-	public ResultSet filterAlbum(String Alb_name, String Format_name) {
+	public ResultSet filterAlbum(String Alb_name, String Artist_name, String Format_name) {
 
 		/* QUERY GENERATION */
 		String query = "SELECT Album.releasename, Album.format FROM Album WHERE ";
@@ -471,7 +471,9 @@ public enum OracleDatabase {
 		}
 
 		/* QUERY GENERATION */ // TODO incorrect
-		String query = "SELECT Song.name, Song.length Album.name, Track.position FROM Song, Track, Album WHERE";
+		String query = "SELECT Song.name, Song.length Album.releasename, Track.position"
+				+ " FROM Song, Track, Album "
+				+ "WHERE album.id = track.mediumid";
 
 		if (!trackName.equals("")) {
 			query += "  Song.name like ? AND ";
@@ -480,7 +482,7 @@ public enum OracleDatabase {
 			query += "  Album.name like ? AND ";
 		}
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
-		query += "ORDER BY Album.name";
+		query += "ORDER BY Album.releasename";
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

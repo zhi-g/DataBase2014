@@ -38,6 +38,7 @@
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
 							type="text" name="formatFilter" placeholder="Format"> <input
+							type="text" name="artistFilter" placeholder="Artist"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
 							value="album"> <input type="submit" value="GO" />
 					</form>
