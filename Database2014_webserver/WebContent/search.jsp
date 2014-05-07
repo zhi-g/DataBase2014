@@ -40,7 +40,12 @@
 							type="text" name="formatFilter" placeholder="Format"> <input
 							type="text" name="artistFilter" placeholder="Artist"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="album"> <input type="submit" value="GO" />
+							value="album"> <input type="submit" value="GO" /> <select name="outSize">
+							<option value="10">10</option>
+							<option value="100">100</option>
+							<option value="1000">1000</option>
+							<option value="max">Maximum</option>
+						</select>
 					</form>
 				</div>
 			</div>
@@ -50,7 +55,12 @@
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="genre"> <input type="submit" value="GO" />
+							value="genre"> <input type="submit" value="GO" /> <select name="outSize">
+							<option value="10">10</option>
+							<option value="100">100</option>
+							<option value="1000">1000</option>
+							<option value="max">Maximum</option>
+						</select>
 					</form>
 				</div>
 				<div class="article">
@@ -59,7 +69,12 @@
 						<input type="text" name="nameFilter" placeholder="Track name"> <input
 							type="text" name="releaseFilter" placeholder="Album name"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="track"> <input type="submit" value="GO" />
+							value="track"> <input type="submit" value="GO" /> <select name="outSize">
+							<option value="10">10</option>
+							<option value="100">100</option>
+							<option value="1000">1000</option>
+							<option value="max">Maximum</option>
+						</select>
 					</form>
 				</div>
 			</div>

@@ -26,8 +26,10 @@
 						tableSize = 10;
 					}
 				}
-
-				if (request.getParameter("table").equals("artist")) {
+				
+				if (null==request.getParameter("table")) {
+					out.println("<h1>Wow, you such a hacker!</h1>");
+				} else if (request.getParameter("table").equals("artist")) {
 					out.println("<h1>Browsing artists</h1>");
 					if (null != request.getParameter("genreFilter")) {
 						ResultSet rs = OracleDatabase.SINGLE.filterArtists(request
@@ -43,8 +45,7 @@
 						out.println(TablesToHTML.artistsResultSetToHTML(rs,
 								tableSize));
 					}
-				}
-				if (request.getParameter("table").equals("genre")) {
+				}else if (request.getParameter("table").equals("genre")) {
 					out.println("<h1>Browsing genres</h1>");
 					ResultSet rs = OracleDatabase.SINGLE.filterGenre(request
 							.getParameter("nameFilter"));

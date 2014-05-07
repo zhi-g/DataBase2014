@@ -127,8 +127,10 @@ public class TablesToHTML {
 				String name = resultSet.getString(1);
 				String artist_name = resultSet.getString(2);
 				String format = resultSet.getString(3);
-				String row = "<tr>" + "<td>" + name + "</td>" + "<td>"
-						+ artist_name + "</td>" + "<td>" + format + "</td>"
+				String row = "<tr>"
+						+ "<td><a href=\"list.jsp?nameFilter=&releaseFilter="+name+"&table=track&outSize=max\">" + name + "</a></td>"
+						+ "<td>" + artist_name + "</td>"
+						+ "<td>" + format + "</td>"
 						+ "</tr>";
 				result += row;
 				count++;

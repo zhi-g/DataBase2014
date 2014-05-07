@@ -434,7 +434,7 @@ public enum OracleDatabase {
 	public ResultSet filterAlbum(String Alb_name, String Artist_name, String Format_name) {
 
 		/* QUERY GENERATION */
-		String query = "SELECT artist.name, Album.format FROM Album, artist_song,artist,track WHERE ";
+		String query = "SELECT UNIQUE album.releasename, artist.name, album.format FROM Album, artist_song,artist,track WHERE ";
 		
 		query += "Artist_song.artistid=Artist.ID AND ";
 		query += "artist_song.trackid=track.ID AND ";
@@ -445,7 +445,7 @@ public enum OracleDatabase {
 		if (!Format_name.equals(""))
 			query += "Album.format like ? AND ";
 		if (!Artist_name.equals(""))
-			query += "Album.format = ? AND ";
+			query += "Artist.name = ? AND ";
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Album.releasename";
 		System.out.println("Query: " + query);
@@ -470,7 +470,7 @@ public enum OracleDatabase {
 			}
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
-			System.err.println("Could not execute query (on artists)");
+			System.err.println("Could not execute query (on album)");
 			SQLHelper.printSQLException(e);
 		}
 		return rs;
@@ -491,7 +491,7 @@ public enum OracleDatabase {
 			query += "Song.name like ? AND ";
 		}
 		if (!albumName.equals("")) {
-			query += "Album.name = ? AND ";
+			query += "Album.releasename = ? AND ";
 		}
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += "ORDER BY Album.releasename";
@@ -512,7 +512,7 @@ public enum OracleDatabase {
 
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
-			System.err.println("Could not execute query (on genre)");
+			System.err.println("Could not execute query (on tracks)");
 			SQLHelper.printSQLException(e);
 		}
 
