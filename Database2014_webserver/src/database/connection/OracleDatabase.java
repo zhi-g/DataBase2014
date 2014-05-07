@@ -300,32 +300,67 @@ public enum OracleDatabase {
 
 		return rs;
 	}
-	
-	
-	/*Insert queries*/
-/*	public Status insertIntoGenre(int id, String name){
-		if (null == mConnection) {
-			return Status.ConnectionProblem;
-		}
-		name = name.replace("'", "''"); // sanitize the name
-		Statement stmt = null;
-		String query = "select * from ("
-				+ "insert into genre (id, name) values ("+ id + "," +name + ")";
 
+	public ResultSet filterAlbum(String Alb_name, String Format_name) {
+
+
+		/* QUERY GENERATION */
+		String query = "SELECT Album.name, Album.format FROM Album WHERE ";
+
+		if (!Alb_name.equals(""))
+			query += "Album.name like ? AND ";
+		if (!Format_name.equals(""))
+			query += "Album.format like ? AND ";
+
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += " ORDER BY Album.name";
+
+		System.out.println("Query: " + query);
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		try {
-			stmt = mConnection.createStatement();
-			int rs = stmt.executeUpdate(query);
-			
+			stmt = mConnection.prepareStatement(query);
+
+			/* Replacing the '?' */
+			int index = 1;
+			if (!nameFilter.equals("")) {
+				stmt.setString(index, "%" + Alb_name + "%");
+				index++;
+			}
+			if (!typeFilter.equals("")) {
+				stmt.setString(index, "%" + Format_name + "%");
+				index++;
+			}
+
+			rs = stmt.executeQuery();
 		} catch (SQLException e) {
-			System.err.println("Could not get B1");
+			System.err.println("Could not execute query (on artists)");
 			SQLHelper.printSQLException(e);
-			
 		}
-		
-		return Status.OK;
-	}*/
-	
-	
+
+		return rs;
+	}
+
+	/* Insert queries */
+	/*
+	 * public Status insertIntoGenre(int id, String name){ if (null ==
+	 * mConnection) { return Status.ConnectionProblem; } name =
+	 * name.replace("'", "''"); // sanitize the name Statement stmt = null;
+	 * String query = "select * from (" +
+	 * "insert into genre (id, name) values ("+ id + "," +name + ")";
+	 * 
+	 * try { stmt = mConnection.createStatement(); int rs =
+	 * stmt.executeUpdate(query);
+	 * 
+	 * } catch (SQLException e) { System.err.println("Could not get B1");
+	 * SQLHelper.printSQLException(e);
+	 * 
+	 * }
+	 * 
+	 * return Status.OK; }
+	 */
+
 	private OracleDatabase() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -349,5 +384,7 @@ public enum OracleDatabase {
 	}
 }
 
-//a changer!
-enum Status {OK, ConnectionProblem, InsertProblem}
+// a changer!
+enum Status {
+	OK, ConnectionProblem, InsertProblem
+}
