@@ -202,7 +202,103 @@ public enum OracleDatabase {
 				count++;
 			}
 		} catch (SQLException e) {
-			System.err.println("Could not get B1");
+			System.err.println("Could not get D");
+			SQLHelper.printSQLException(e);
+		}
+		return result;
+	}
+
+	public String queryE() throws SQLException {
+		if (null == mConnection) {
+			return null;
+		}
+
+		String result = "";
+
+		Statement stmt = null;
+
+		String query = "Select name "
+				+ " From(Select art.name, (count(DISTINCT Genre.name)) AS countGenre "
+				+ " From Artist Art,Artist_genre AG, Genre Genre "
+				+ " WHERE art.gender = 'Female' AND art.id=ag.artistid AND ag.genreID=genre.id "
+				+ " group BY art.name ORDER BY countGenre DESC)"
+				+ " where rownum<=1";
+
+		try {
+			stmt = mConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+			result = rs.getString("name");
+		} catch (SQLException e) {
+			System.err.println("Could not get E");
+			SQLHelper.printSQLException(e);
+		}
+		return result;
+
+	}
+
+	public String queryF() throws SQLException {
+		if (null == mConnection) {
+			return null;
+		}
+
+		String result = "";
+
+		Statement stmt = null;
+
+		String query = "select r1.name from (Select Area.name, area.id, count(DISTINCT Artist.name) AS countFemale "
+				+ "	From Artist, Area "
+				+ " WHERE Artist.gender='Female' AND Artist.areaID=Area.ID "
+				+ " group BY area.name, area.id) r1,"
+				+ " (Select Area.name, area.id, count(DISTINCT Artist.name) AS countMale"
+				+ " From Artist, Area "
+				+ " WHERE Artist.gender='Male'"
+				+ " AND Artist.areaID=Area.ID "
+				+ " group BY area.name, area.id) r2"
+				+ " where countFemale > countMale and r1.id = r2.id";
+
+		try {
+			stmt = mConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String name = rs.getString("name");
+				result = result + name + "<br/>";
+			}
+		} catch (SQLException e) {
+			System.err.println("Could not get F");
+			SQLHelper.printSQLException(e);
+		}
+		return result;
+
+	}
+
+	public String queryG() throws SQLException {
+		if (null == mConnection) {
+			return null;
+		}
+
+		String result = "";
+
+		Statement stmt = null;
+
+		String query = "select album.* from ("
+				+ " select mediumid, count(t.id)"
+				+ " from track t"
+				+ " group by t.mediumid"
+				+ " having  count(t.id) >=  (select max(count(t1.id))"
+				+ " from track t1"
+				+ " group by t1.mediumid)), album where mediumid = album.id";
+
+		try {
+			stmt = mConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while (rs.next()) {
+				String name = rs.getString("releasename");
+				result = result + name + ", "+rs.getString("format") + ", (id: " + rs.getString("id") + ")"+ "<br/>";
+			}
+		} catch (SQLException e) {
+			System.err.println("Could not get F");
 			SQLHelper.printSQLException(e);
 		}
 		return result;
@@ -300,32 +396,26 @@ public enum OracleDatabase {
 
 		return rs;
 	}
-	
-	
-	/*Insert queries*/
-/*	public Status insertIntoGenre(int id, String name){
-		if (null == mConnection) {
-			return Status.ConnectionProblem;
-		}
-		name = name.replace("'", "''"); // sanitize the name
-		Statement stmt = null;
-		String query = "select * from ("
-				+ "insert into genre (id, name) values ("+ id + "," +name + ")";
 
-		try {
-			stmt = mConnection.createStatement();
-			int rs = stmt.executeUpdate(query);
-			
-		} catch (SQLException e) {
-			System.err.println("Could not get B1");
-			SQLHelper.printSQLException(e);
-			
-		}
-		
-		return Status.OK;
-	}*/
-	
-	
+	/* Insert queries */
+	/*
+	 * public Status insertIntoGenre(int id, String name){ if (null ==
+	 * mConnection) { return Status.ConnectionProblem; } name =
+	 * name.replace("'", "''"); // sanitize the name Statement stmt = null;
+	 * String query = "select * from (" +
+	 * "insert into genre (id, name) values ("+ id + "," +name + ")";
+	 * 
+	 * try { stmt = mConnection.createStatement(); int rs =
+	 * stmt.executeUpdate(query);
+	 * 
+	 * } catch (SQLException e) { System.err.println("Could not get B1");
+	 * SQLHelper.printSQLException(e);
+	 * 
+	 * }
+	 * 
+	 * return Status.OK; }
+	 */
+
 	private OracleDatabase() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -349,5 +439,7 @@ public enum OracleDatabase {
 	}
 }
 
-//a changer!
-enum Status {OK, ConnectionProblem, InsertProblem}
+// a changer!
+enum Status {
+	OK, ConnectionProblem, InsertProblem
+}

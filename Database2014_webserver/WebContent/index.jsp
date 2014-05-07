@@ -64,17 +64,8 @@
 				</div>
 				<div class="article">
 					<h2>track-boulimic</h2>
-					<p>Album with highest number of tracks</p>
-					<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
-						prece frustra temptata, sulcatis lateribus mortisque metu admoto
-						turpi confessione cogitatorum socium, quae nulla erant, fuisse
-						firmavit cum nec vidisset quicquam nec audisset penitus expers
-						forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
-						in eodem gradu constantiae stetit latrocinium illud esse, non
-						iudicium clamans. Sed si ille hac tam eximia fortuna propter
-						utilitatem rei publicae frui non properat, ut omnia illa
-						conficiat, quid ego, senator, facere debeo, quem, etiamsi ille
-						aliud vellet, rei publicae consulere oporteret?</p>
+					<p>Albums with highest number of tracks</p>
+					<p><%out.println(OracleDatabase.SINGLE.queryG()); %></p>
 				</div>
 			</div>
 			<div class="section">
@@ -99,33 +90,14 @@
 				<div class="article">
 					<h2>genre-wide woman</h2>
 					<p>Female artist associated with most genres.</p>
-					<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
-						prece frustra temptata, sulcatis lateribus mortisque metu admoto
-						turpi confessione cogitatorum socium, quae nulla erant, fuisse
-						firmavit cum nec vidisset quicquam nec audisset penitus expers
-						forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
-						in eodem gradu constantiae stetit latrocinium illud esse, non
-						iudicium clamans. Sed si ille hac tam eximia fortuna propter
-						utilitatem rei publicae frui non properat, ut omnia illa
-						conficiat, quid ego, senator, facere debeo, quem, etiamsi ille
-						aliud vellet, rei publicae consulere oporteret?</p>
+					<p><% out.println(OracleDatabase.SINGLE.queryE()); %></p>
 				</div>
 				<div class="article">
 					<h2>Women's cities</h2>
 					<p>
-						Ten random cities with more women than men. <a href="#">See
-							all cities</a>
+						Areas with more women than men.
 					</p>
-					<p>Et Epigonus quidem amictu tenus philosophus, ut apparuit,
-						prece frustra temptata, sulcatis lateribus mortisque metu admoto
-						turpi confessione cogitatorum socium, quae nulla erant, fuisse
-						firmavit cum nec vidisset quicquam nec audisset penitus expers
-						forensium rerum; Eusebius vero obiecta fidentius negans, suspensus
-						in eodem gradu constantiae stetit latrocinium illud esse, non
-						iudicium clamans. Sed si ille hac tam eximia fortuna propter
-						utilitatem rei publicae frui non properat, ut omnia illa
-						conficiat, quid ego, senator, facere debeo, quem, etiamsi ille
-						aliud vellet, rei publicae consulere oporteret?</p>
+					<p><% out.println(OracleDatabase.SINGLE.queryF()); %></p>
 				</div>
 			</div>
 		</div>
