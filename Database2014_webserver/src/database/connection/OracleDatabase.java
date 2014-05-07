@@ -173,9 +173,11 @@ public enum OracleDatabase {
 		}
 		return result;
 	}
-
-	public ResultSet filterArtists(String nameFilter, String typeFilter,
-			String genderFilter, String areaFilter, String genreFilter) {
+	
+	/**
+	 * to filter according to genre
+	 */
+	public ResultSet filterArtists(String genreFilter) {
 
 		// SQLHelper.inputSanitization(nameFilter);
 		// SQLHelper.inputSanitization(typeFilter);
@@ -191,6 +193,46 @@ public enum OracleDatabase {
 		query += "Genre.ID=Artist_Genre.genreID AND ";
 		query += "Artist.areaID=Area.id AND ";
 
+		if (!genreFilter.equals(""))
+			query += "Genre.name like ? AND ";
+
+		query = query.substring(0, query.length() - 5); // remove last 'AND'
+		query += " ORDER BY Artist.name";
+
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = mConnection.prepareStatement(query);
+
+			/* Replacing the '?' */
+			if (!genreFilter.equals("")) {
+				stmt.setString(1, "%" + genreFilter + "%");
+			}
+
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.err.println("Could not execute query (on artists)");
+			SQLHelper.printSQLException(e);
+		}
+
+		return rs;
+	}
+	public ResultSet filterArtists(String nameFilter, String typeFilter,
+			String genderFilter, String areaFilter) {
+
+		// SQLHelper.inputSanitization(nameFilter);
+		// SQLHelper.inputSanitization(typeFilter);
+		// SQLHelper.inputSanitization(genderFilter);
+		// SQLHelper.inputSanitization(areaFilter);
+		// SQLHelper.inputSanitization(genreFilter);
+
+		/* QUERY GENERATION */
+		String query = "SELECT Artist.name, Artist.type, Artist.gender, Area.name"
+				+ " FROM Artist,Area" + " WHERE ";
+		
+		query += "Artist.areaID=Area.id AND ";
+
 		if (!nameFilter.equals(""))
 			query += "Artist.name like ? AND ";
 		if (!typeFilter.equals(""))
@@ -199,8 +241,6 @@ public enum OracleDatabase {
 			query += "Artist.gender like ? AND ";
 		if (!areaFilter.equals(""))
 			query += "Area.name like ? AND ";
-		if (!genreFilter.equals(""))
-			query += "Genre.name like ? AND ";
 
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Artist.name";
@@ -230,10 +270,6 @@ public enum OracleDatabase {
 				stmt.setString(index, "%" + areaFilter + "%");
 				index++;
 			}
-			if (!genreFilter.equals("")) {
-				stmt.setString(index, "%" + genreFilter + "%");
-				index++;
-			}
 
 			rs = stmt.executeQuery();
 		} catch (SQLException e) {
@@ -251,7 +287,7 @@ public enum OracleDatabase {
 		if (!nameFilter.equals("")) {
 			query += " WHERE Genre.name like ?";
 		}
-		query += " ORDER BY Genre.name";
+		query += "ORDER BY Genre.name";
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
