@@ -471,15 +471,16 @@ public enum OracleDatabase {
 		}
 
 		/* QUERY GENERATION */ // TODO incorrect
-		String query = "SELECT Song.name, Song.length Album.releasename, Track.position"
+		String query = "SELECT UNIQUE Song.name, Song.length, Album.releasename, Track.position"
 				+ " FROM Song, Track, Album "
-				+ "WHERE album.id = track.mediumid";
+				+ "WHERE album.id = track.mediumid "
+				+ "AND song.id = track.recordingid AND ";
 
 		if (!trackName.equals("")) {
-			query += "  Song.name like ? AND ";
+			query += "Song.name like ? AND ";
 		}
 		if (!albumName.equals("")) {
-			query += "  Album.name like ? AND ";
+			query += "Album.name = ? AND ";
 		}
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += "ORDER BY Album.releasename";
@@ -491,7 +492,7 @@ public enum OracleDatabase {
 
 			int index = 1;
 			if (!trackName.equals("")) {
-				stmt.setString(index, trackName);
+				stmt.setString(index, "%"+trackName+"%");
 				index++;
 			}
 			if (!albumName.equals("")) {

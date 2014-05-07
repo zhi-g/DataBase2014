@@ -156,10 +156,15 @@ public class TablesToHTML {
 		int count = 0;
 		try {
 			while (resultSet.next() && count < tableSize) {
-				String genre = resultSet.getString("name"); // TODO pas fini
-				String row = "<tr>" + "<td>" + genre + "</td>" + "<td>" + genre
-						+ "</td>" + "<td>" + genre + "</td>" + "<td>" + genre
-						+ "</td>" + "</tr>";
+				String name = resultSet.getString("name");
+				int length = Math.round(resultSet.getInt("length")/1000);
+				String album = resultSet.getString("releasename");
+				int position = resultSet.getInt("position");
+				String row = "<tr>" 
+				+ "<td>" + name + "</td>" 
+				+ "<td>" + (int)Math.floor(length/60) + ":" + length%60 + "</td>" 
+				+ "<td>" + album + "</td>"
+				+ "<td>" + position + "</td>" + "</tr>";
 				result += row;
 				count++;
 			}

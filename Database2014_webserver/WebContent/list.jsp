@@ -51,13 +51,19 @@
 					out.println(TablesToHTML.genreResultSetToHTML(rs, tableSize));
 				}
 				if (request.getParameter("table").equals("album")) {
-					// TODO check
 					out.println("<h1>Browsing albums</h1>");
 					ResultSet rs = OracleDatabase.SINGLE.filterAlbum(
 							request.getParameter("nameFilter"),
 							request.getParameter("artistFilter"),
 							request.getParameter("formatFilter"));
 					out.println(TablesToHTML.albumResultSetToHTML(rs, tableSize));
+				}
+				if (request.getParameter("table").equals("track")) {
+					out.println("<h1>Browsing tracks</h1>");
+					ResultSet rs = OracleDatabase.SINGLE.filterTrack(
+							request.getParameter("nameFilter"),
+							request.getParameter("releaseFilter"));
+					out.println(TablesToHTML.trackResultSetToHTML(rs, tableSize));
 				}
 			%>
 		</div>
