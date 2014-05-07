@@ -434,11 +434,18 @@ public enum OracleDatabase {
 	public ResultSet filterAlbum(String Alb_name, String Artist_name, String Format_name) {
 
 		/* QUERY GENERATION */
-		String query = "SELECT Album.releasename, Album.format FROM Album WHERE ";
+		String query = "SELECT artist.name, Album.format FROM Album, artist_song,artist,track WHERE ";
+		
+		query += "Artist_song.artistid=Artist.ID AND ";
+		query += "artist_song.trackid=track.ID AND ";
+		query += "track.mediumID=album.id AND ";
+		
 		if (!Alb_name.equals(""))
 			query += "Album.releasename like ? AND ";
 		if (!Format_name.equals(""))
 			query += "Album.format like ? AND ";
+		if (!Artist_name.equals(""))
+			query += "Album.format = ? AND ";
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Album.releasename";
 		System.out.println("Query: " + query);
@@ -451,6 +458,10 @@ public enum OracleDatabase {
 			int index = 1;
 			if (!Alb_name.equals("")) {
 				stmt.setString(index, "%" + Alb_name + "%");
+				index++;
+			}
+			if (!Artist_name.equals("")) {
+				stmt.setString(index, Artist_name);
 				index++;
 			}
 			if (!Format_name.equals("")) {

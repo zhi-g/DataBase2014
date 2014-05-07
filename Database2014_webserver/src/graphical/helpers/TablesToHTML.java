@@ -120,13 +120,15 @@ public class TablesToHTML {
 			tableSize = Integer.MAX_VALUE;
 		}
 		String result = "<table id=\"results\"><tr>" + "<th>Album Name</th>"
-				+ "<th>Album Format</th>" + "</tr>";
+				+ "<th>Artist Name</th>" + "<th>Album Format</th>" + "</tr>";
 		int count = 0;
 		try {
 			while (resultSet.next() && count < tableSize) {
 				String name = resultSet.getString(1);
-				String format = resultSet.getString(2);
-				String row = "<tr>" + "<td>" + name + "</td>" + "<td>" + format
+				String artist_name = resultSet.getString(2);
+				String format = resultSet.getString(3);
+				String row = "<tr>" + "<td>" + name + "</td>" + "<td>"
+						+ artist_name + "</td>" + "<td>" + format + "</td>"
 						+ "</tr>";
 				result += row;
 				count++;
