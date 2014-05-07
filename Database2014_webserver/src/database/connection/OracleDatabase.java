@@ -173,7 +173,41 @@ public enum OracleDatabase {
 		}
 		return result;
 	}
-	
+
+	public String queryD() throws SQLException {
+		if (null == mConnection) {
+			return null;
+		}
+
+		String result = "";
+
+		Statement stmt = null;
+		String query = "select * from ("
+				+ " select a.name from"
+				+ " (select art.artistid, count(distinct a1.releasename) as countRecordings"
+				+ " from album a1, track t, artist_song art"
+				+ " where art.trackid = t.id and t.recordingid = a1.id"
+				+ " group by art.artistid"
+				+ " order by countRecordings desc) res, artist a"
+				+ " where a.id =res.artistid and a.type = 'Group'"
+				+ ") where rownum<=10";
+
+		try {
+			stmt = mConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			int count = 0;
+			while (rs.next() && count < 10) {
+				String name = rs.getString("name");
+				result = result + name + "<br/>";
+				count++;
+			}
+		} catch (SQLException e) {
+			System.err.println("Could not get B1");
+			SQLHelper.printSQLException(e);
+		}
+		return result;
+	}
+
 	/**
 	 * to filter according to genre
 	 */
@@ -199,7 +233,6 @@ public enum OracleDatabase {
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Artist.name";
 
-
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -218,6 +251,7 @@ public enum OracleDatabase {
 
 		return rs;
 	}
+
 	public ResultSet filterArtists(String nameFilter, String typeFilter,
 			String genderFilter, String areaFilter) {
 
@@ -230,7 +264,7 @@ public enum OracleDatabase {
 		/* QUERY GENERATION */
 		String query = "SELECT Artist.name, Artist.type, Artist.gender, Area.name"
 				+ " FROM Artist,Area" + " WHERE ";
-		
+
 		query += "Artist.areaID=Area.id AND ";
 
 		if (!nameFilter.equals(""))
@@ -245,7 +279,7 @@ public enum OracleDatabase {
 		query = query.substring(0, query.length() - 5); // remove last 'AND'
 		query += " ORDER BY Artist.name";
 
-		System.out.println("Query: "+query);
+		System.out.println("Query: " + query);
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -303,6 +337,25 @@ public enum OracleDatabase {
 		return rs;
 	}
 
+	/* Insert queries */
+	/*
+	 * public Status insertIntoGenre(int id, String name){ if (null ==
+	 * mConnection) { return Status.ConnectionProblem; } name =
+	 * name.replace("'", "''"); // sanitize the name Statement stmt = null;
+	 * String query = "select * from (" +
+	 * "insert into genre (id, name) values ("+ id + "," +name + ")";
+	 * 
+	 * try { stmt = mConnection.createStatement(); int rs =
+	 * stmt.executeUpdate(query);
+	 * 
+	 * } catch (SQLException e) { System.err.println("Could not get B1");
+	 * SQLHelper.printSQLException(e);
+	 * 
+	 * }
+	 * 
+	 * return Status.OK; }
+	 */
+
 	private OracleDatabase() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
@@ -324,4 +377,9 @@ public enum OracleDatabase {
 			mConnection = null;
 		}
 	}
+}
+
+// a changer!
+enum Status {
+	OK, ConnectionProblem, InsertProblem
 }

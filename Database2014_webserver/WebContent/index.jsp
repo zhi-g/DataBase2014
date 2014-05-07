@@ -37,10 +37,29 @@
 					<h4>Top ten groups with most tracks and top ten groups with
 						most releases.</h4>
 					<p>
-						<b>Most tracks:</b>
-						<%
-							out.println(OracleDatabase.SINGLE.queryC());
-						%>
+					<table>
+						<tr>
+							<th><p>Most tracks</p></th>
+							<th><p>Most releases</p></th>
+						</tr>
+						<tr>
+							<td>
+								<p>
+									<%
+										out.println(OracleDatabase.SINGLE.queryC());
+									%>
+								</p>
+							</td>
+							<td>
+								<p>
+									<%
+										out.println(OracleDatabase.SINGLE.queryD());
+									%>
+								</p>
+							</td>
+						</tr>
+
+					</table>
 					</p>
 				</div>
 				<div class="article">
