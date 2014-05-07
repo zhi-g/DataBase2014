@@ -17,23 +17,30 @@
 		<div class="article">
 			<%
 				int tableSize = 100;
-				if (request.getParameter("outSize").equals("max")) {
-					tableSize = Integer.MAX_VALUE;
-				} else if (request.getParameter("outSize").equals("1000")) {
-					tableSize = 1000;
-				} else if (request.getParameter("outSize").equals("10")) {
-					tableSize = 10;
+				if (null != request.getParameter("outSize")) {
+					if (request.getParameter("outSize").equals("max")) {
+						tableSize = Integer.MAX_VALUE;
+					} else if (request.getParameter("outSize").equals("1000")) {
+						tableSize = 1000;
+					} else if (request.getParameter("outSize").equals("10")) {
+						tableSize = 10;
+					}
 				}
 
 				if (request.getParameter("table").equals("artist")) {
 					out.println("<h1>Browsing artists</h1>");
-					ResultSet rs = OracleDatabase.SINGLE.filterArtists(
-							request.getParameter("nameFilter"),
-							request.getParameter("typeFilter"),
-							request.getParameter("genderFilter"),
-							request.getParameter("areaFilter"),
-							request.getParameter("genreFilter"));
-					out.println(TablesToHTML.artistsResultSetToHTML(rs, tableSize));
+					if (null != request.getParameter("genreFilter")) {
+						ResultSet rs = OracleDatabase.SINGLE.filterArtists(
+								request.getParameter("genreFilter"));
+						out.println(TablesToHTML.artistsGenreResultSetToHTML(rs, tableSize));
+					} else {
+						ResultSet rs = OracleDatabase.SINGLE.filterArtists(
+								request.getParameter("nameFilter"),
+								request.getParameter("typeFilter"),
+								request.getParameter("genderFilter"),
+								request.getParameter("areaFilter"));
+						out.println(TablesToHTML.artistsResultSetToHTML(rs, tableSize));
+					}
 				}
 				if (request.getParameter("table").equals("genre")) {
 					out.println("<h1>Browsing genres</h1>");
