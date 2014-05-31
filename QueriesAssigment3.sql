@@ -27,6 +27,8 @@ where cnt > 30) t1,
 ), artist r where r.id = artistid and r.type = 'Group' and r.areaid is not null)) t2
 where t1.id = t2.areaid;
 
+---------------------------------------------------------------------------------------------------------------------
+
 -- QUERY K
 --List all genres that have no female artists, all genres that have no male artists and all genres that have no groups. 
 
@@ -45,6 +47,7 @@ select g.name
 from genre G , artist A, artist_genre AG
 where a.id = ag.artistid and ag.genreid = g.id and a.type != 'Group';
 
+---------------------------------------------------------------------------------------------------------------------
 
 -- QUERY O
 select distinct releasename from (
@@ -57,3 +60,14 @@ select t1.releaseid from
   group by album.releaseid
   order by counter desc) where rownum = 1)) fat1, album
   where fat1.releaseid = album.releaseid;
+
+---------------------------------------------------------------------------------------------------------------------
+
+  -- QUERY I (not sur if result is correct)
+  select name from (
+Select distinct song.name , count(*) as counter
+from track, song, artist, artist_song ass, album
+where ass.artistid = artist.id and ass.trackid = track.id and artist.name = 'Metallica' and track.mediumid = album.id
+and track.recordingid = song.id
+group by song.name
+order by counter desc) where rownum <=25;
