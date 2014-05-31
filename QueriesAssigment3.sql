@@ -44,3 +44,16 @@ where a.id = ag.artistid and ag.genreid = g.id and a.gender != 'Male';
 select g.name 
 from genre G , artist A, artist_genre AG
 where a.id = ag.artistid and ag.genreid = g.id and a.type != 'Group';
+
+
+-- QUERY O
+select distinct releasename from (
+select t1.releaseid from 
+  (select releaseid,count(*) as counter from album
+  group by album.releaseid
+  order by counter desc) t1
+  where counter = (select counter from
+(select releaseid,count(*) as counter from album
+  group by album.releaseid
+  order by counter desc) where rownum = 1)) fat1, album
+  where fat1.releaseid = album.releaseid;
