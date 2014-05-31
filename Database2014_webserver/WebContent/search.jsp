@@ -3,6 +3,9 @@
 <%@page import="database.connection.OracleDatabase"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	response.setContentType("text/html; charset=utf-8");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,9 +23,9 @@
 					<h2>Artists</h2>
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
-							type="text" name="typeFilter" placeholder="Type"> <br/> <input
-							type="text" name="genderFilter" placeholder="Gender"> <input
-							type="text" name="areaFilter" placeholder="Area"> <br />
+							type="text" name="typeFilter" placeholder="Type"> <br />
+						<input type="text" name="genderFilter" placeholder="Gender">
+						<input type="text" name="areaFilter" placeholder="Area"> <br />
 						<input style="visibility: hidden; width: 0px;" type="text"
 							name="table" value="artist"><input type="submit"
 							value="GO" /> <select name="outSize">
@@ -40,7 +43,8 @@
 							type="text" name="formatFilter" placeholder="Format"> <input
 							type="text" name="artistFilter" placeholder="Artist"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="album"> <input type="submit" value="GO" /> <select name="outSize">
+							value="album"> <input type="submit" value="GO" /> <select
+							name="outSize">
 							<option value="10">10</option>
 							<option value="100">100</option>
 							<option value="1000">1000</option>
@@ -55,7 +59,8 @@
 					<form action="list.jsp">
 						<input type="text" name="nameFilter" placeholder="Name"> <input
 							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="genre"> <input type="submit" value="GO" /> <select name="outSize">
+							value="genre"> <input type="submit" value="GO" /> <select
+							name="outSize">
 							<option value="10">10</option>
 							<option value="100">100</option>
 							<option value="1000">1000</option>
@@ -66,10 +71,11 @@
 				<div class="article">
 					<h2>Track</h2>
 					<form action="list.jsp">
-						<input type="text" name="nameFilter" placeholder="Track name"> <input
-							type="text" name="releaseFilter" placeholder="Album name"> <input
-							style="visibility: hidden; width: 0px;" type="text" name="table"
-							value="track"> <input type="submit" value="GO" /> <select name="outSize">
+						<input type="text" name="nameFilter" placeholder="Track name">
+						<input type="text" name="releaseFilter" placeholder="Album name">
+						<input style="visibility: hidden; width: 0px;" type="text"
+							name="table" value="track"> <input type="submit"
+							value="GO" /> <select name="outSize">
 							<option value="10">10</option>
 							<option value="100">100</option>
 							<option value="1000">1000</option>
