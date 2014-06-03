@@ -49,7 +49,7 @@ where a.id = ag.artistid and ag.genreid = g.id and a.type != 'Group';
 
 --Alternative for Query K: 
 -- no female
-select count(distinct g1.name)
+select distinct g1.name
 from genre g1
 where g1.id not in
 (select distinct g.id
@@ -57,7 +57,7 @@ from genre G , artist A, artist_genre AG
 where a.id = ag.artistid and ag.genreid = g.id and a.gender = 'Female');
 
 -- no male
-select count(distinct g1.name)
+select distinct g1.name
 from genre g1
 where g1.id not in
 (select distinct g.id
@@ -65,7 +65,7 @@ from genre G , artist A, artist_genre AG
 where a.id = ag.artistid and ag.genreid = g.id and a.gender = 'Male');
 
 -- no Group
-select count(distinct g1.name)
+select distinct g1.name
 from genre g1
 where g1.id not in
 (select distinct g.id
