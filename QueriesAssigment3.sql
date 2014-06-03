@@ -76,6 +76,41 @@ FROM (SELECT
 --
 ---------------------------------------------------------------------------------------------------------------------
 
+  -- QUERY I (it is correct)
+  select name from (
+Select distinct song.name , count(*) as counter
+from track, song, artist, artist_song ass, album
+where ass.artistid = artist.id and ass.trackid = track.id and artist.name = 'Metallica' and track.mediumid = album.id
+and track.recordingid = song.id
+group by song.name
+order by counter desc) where rownum <=25;
+---------------------------------------------------------------------------------------------------------------------
+--Query J
+select t2.name, t1.name
+from (
+  select 
+    gid,
+    name,
+    rank() over(partition by gid order by nrt) rnk
+  from
+    (select ag.genreid as gid, ag.artistid as aid, tr.crt as nrt, art.name as name
+    from
+      (SELECT genreid
+        FROM
+          (SELECT genreid,
+            COUNT(DISTINCT artistid) AS cnt
+          FROM artist_genre
+          GROUP BY genreid
+          ORDER BY cnt DESC
+          )
+        WHERE rownum<11) g, artist_genre ag, artist art,
+        (select artistid, count(*) as crt
+        from artist_song
+        group by artistid) tr
+        where art.gender = 'Female' and tr.artistid = art.id and g.genreid = ag.genreid and ag.artistid = art.id)) t1, genre t2
+where t1.rnk = 1 and t2.id = gid;
+---------------------------------------------------------------------------------------------------------------------
+
 -- QUERY K
 --List all genres that have no female artists, all genres that have no male artists and all genres that have no groups. 
 
@@ -118,13 +153,4 @@ select t1.releaseid from
   group by album.releaseid))) fat1, album
   where fat1.releaseid = album.releaseid;
 
----------------------------------------------------------------------------------------------------------------------
 
-  -- QUERY I (not sur if result is correct)
-  select name from (
-Select distinct song.name , count(*) as counter
-from track, song, artist, artist_song ass, album
-where ass.artistid = artist.id and ass.trackid = track.id and artist.name = 'Metallica' and track.mediumid = album.id
-and track.recordingid = song.id
-group by song.name
-order by counter desc) where rownum <=25;
