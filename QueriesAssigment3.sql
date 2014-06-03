@@ -80,10 +80,10 @@ select t1.releaseid from
   (select releaseid,count(*) as counter from album
   group by album.releaseid
   order by counter desc) t1
-  where counter = (select counter from
+  where counter = (select max(counter) from
 (select releaseid,count(*) as counter from album
-  group by album.releaseid
-  order by counter desc) where rownum = 1)) fat1, album
+  where releaseid is not null
+  group by album.releaseid))) fat1, album
   where fat1.releaseid = album.releaseid;
 
 ---------------------------------------------------------------------------------------------------------------------
