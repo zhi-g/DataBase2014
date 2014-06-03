@@ -191,6 +191,32 @@ select t1.releaseid from
   where fat1.releaseid = album.releaseid;
 
 ---------------------------------------------------------------------------------------------------------------------
+--Query M
+select * from
+(select g.name, g.id, count(distinct t.id) as cnt
+from
+  artist g, artist_song arts, track t
+where g.type = 'Group' 
+      and g.id = arts.artistid 
+      and arts.trackid = t.id 
+      and t.mediumid in
+          (select distinct t2.mediumid
+          from artist_song s1,
+                artist_song s2, 
+                track t1,
+                track t2
+          where 
+                s1.artistid != s2.artistid
+                and 
+                t1.id = s1.trackid 
+                and 
+                t2.id = s2.trackid
+                and 
+                t1.mediumid = t2.mediumid)
+group by g.id, g.name
+order by cnt DESC)
+where rownum <11;
+---------------------------------------------------------------------------------------------------------------------
 
 -- QUERY P
   select genre.name from genre, (
@@ -209,5 +235,15 @@ where artist.id = table1.id) fat1
 where artist.id = fat1.id and artist.id = ag.artistid and ag.genreid = genre.id) fat2
 group by fat2.id
 order by cnt desc) where rownum <=1) fat3 where genre.id = fat3.id;
+---------------------------------------------------------------------------------------------------------------------
 
-
+--Query Q
+select name, cnt
+  from(
+  select 
+    s.name, count(distinct s.id) as cnt
+  from song s
+  group by s.name
+  order by cnt DESC)
+where rownum<=5;
+---------------------------------------------------------------------------------------------------------------------
