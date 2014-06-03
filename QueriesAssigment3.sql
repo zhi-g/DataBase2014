@@ -140,6 +140,43 @@ from genre G , artist A, artist_genre AG
 where a.id = ag.artistid and ag.genreid = g.id and a.type = 'Group');
 
 ---------------------------------------------------------------------------------------------------------------------
+--Query L
+SELECT t4.name,
+  t3.name, t3.countRecordedTracks
+FROM
+  (SELECT t2.areaid,
+    t2.id, t2.name, t2.countRecordedTracks,
+    row_number() over(partition BY t2.areaid order by t2.countRecordedTracks DESC) rnk
+  FROM
+    (SELECT id,
+      r.name,
+      areaid,
+      countRecordedTracks
+    FROM
+      (SELECT t.artistid ,
+        COUNT(*) AS countRecordedTracks
+      FROM artist_song t
+      GROUP BY t.artistid
+      ) t1,
+      artist r
+    WHERE r.id   = t1.artistid
+    AND r.gender = 'Male'
+    ) t2
+  ) t3, area t4
+WHERE t3.rnk  <=5 and t4.id = t3.areaid 
+AND t3.areaid IN (SELECT DISTINCT area.id
+  FROM area,
+    (SELECT artist.areaid,
+      COUNT(DISTINCT artist.name) AS cnt
+    FROM artist
+    WHERE artist.areaid IS NOT NULL
+    AND artist.type      = 'Group'
+    GROUP BY artist.areaid
+    ORDER BY cnt DESC
+    ) t
+  WHERE t.cnt >= 10
+  ); 
+---------------------------------------------------------------------------------------------------------------------
 
 -- QUERY O
 select distinct releasename from (
