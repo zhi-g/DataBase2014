@@ -91,7 +91,7 @@ from (
   select 
     gid,
     name,
-    rank() over(partition by gid order by nrt) rnk
+    rank() over(partition by gid order by nrt desc) rnk
   from
     (select ag.genreid as gid, ag.artistid as aid, tr.crt as nrt, art.name as name
     from
