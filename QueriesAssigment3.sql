@@ -244,3 +244,27 @@ select name, cnt
   order by cnt DESC)
 where rownum<=5;
 ---------------------------------------------------------------------------------------------------------------------
+--Query S
+
+select id, avs FROM
+(SELECT t2.id,
+  COUNT(t1.crs) AS cns,
+  AVG(t1.crs)   AS avs
+FROM
+  (SELECT *
+  FROM
+    (SELECT recordingid,
+      COUNT(DISTINCT mediumid) AS crs
+    FROM track
+    GROUP BY recordingid
+    )
+  WHERE crs>=100
+  ) t1,
+  artist t2,
+  track t3,
+  artist_song t4
+WHERE t1.recordingid = t3.recordingid
+AND t3.id            = t4.trackid
+AND t4.artistid      = t2.id
+GROUP BY t2.id
+) WHERE cns>=10;
