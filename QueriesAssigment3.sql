@@ -174,7 +174,7 @@ AND t3.areaid IN (SELECT DISTINCT area.id
     GROUP BY artist.areaid
     ORDER BY cnt DESC
     ) t
-  WHERE t.cnt >= 10
+  WHERE area.id = t.areaid and t.cnt >= 10
   ); 
 ---------------------------------------------------------------------------------------------------------------------
 
