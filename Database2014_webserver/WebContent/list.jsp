@@ -12,6 +12,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>DB2014 - Group 5</title>
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<script type="text/javascript">
+ function eraseEntry(id, table) {
+	if (confirm('Are you sure you want to delete this row?')) {
+		window.location = "confirm.jsp?type=delete&table="+table+"&id="+id;
+	}
+ }
+</script>
 </head>
 <body>
 	<%@ include file="header.jsp"%>
