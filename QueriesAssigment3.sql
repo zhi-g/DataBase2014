@@ -192,15 +192,11 @@ select t1.releaseid from
 
 ---------------------------------------------------------------------------------------------------------------------
 --Query M
-select * from
-(select g.name, g.id, count(distinct t.id) as cnt
+select distinct(1) from
+(select g.id, count(distinct meds.trackid) as cnt
 from
-  artist g, artist_song arts, track t
-where g.type = 'Group' 
-      and g.id = arts.artistid 
-      and arts.trackid = t.id 
-      and t.mediumid in
-          (select distinct t2.mediumid
+  artist g, 
+  (select s1.artistid, s1.trackid
           from artist_song s1,
                 artist_song s2, 
                 track t1,
@@ -212,10 +208,11 @@ where g.type = 'Group'
                 and 
                 t2.id = s2.trackid
                 and 
-                t1.mediumid = t2.mediumid)
-group by g.id, g.name
+                t1.mediumid = t2.mediumid) meds
+where g.type = 'Group' and g.id = meds.artistid 
+group by g.id
 order by cnt DESC)
-where rownum <11;
+where rownum<11;
 ---------------------------------------------------------------------------------------------------------------------
 
 -- QUERY P
