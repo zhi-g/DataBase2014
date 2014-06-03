@@ -153,4 +153,24 @@ select t1.releaseid from
   group by album.releaseid))) fat1, album
   where fat1.releaseid = album.releaseid;
 
+---------------------------------------------------------------------------------------------------------------------
+
+-- QUERY P
+  select genre.name from genre, (
+select * from (
+select fat2.id, count(*) as cnt
+from (
+select  genre.name,genre.id
+from genre, artist_genre ag,artist, (select artist.name,artist.id, table1.counter from
+artist, (
+select A1.id,count(*) as counter
+from artist A1, artist_genre AG, genre G
+where A1.id = AG.artistid and Ag.genreid = G.id
+group by A1.id
+order by counter desc) table1
+where artist.id = table1.id) fat1
+where artist.id = fat1.id and artist.id = ag.artistid and ag.genreid = genre.id) fat2
+group by fat2.id
+order by cnt desc) where rownum <=1) fat3 where genre.id = fat3.id;
+
 
