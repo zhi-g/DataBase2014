@@ -1,32 +1,79 @@
--- QUERY H not correct I think
-select distinct t2.name from
-(select distinct area.id
-from area, (select artist.areaid, count(distinct artist.name) as cnt
-from artist
-where artist.areaid is not null
-group by artist.areaid
-order by cnt DESC)
-where cnt > 30) t1,
-((select r.name , r.areaid from
-( select t.artistid , count(*) as countRecordedTracks
-  from artist_song t
-  group by t.artistid
-  order by countRecordedTracks desc
-), artist r where r.id = artistid and r.gender = 'Male' and r.areaid is not null) UNION
-(select r.name , r.areaid from
-( select t.artistid , count(*) as countRecordedTracks
-  from artist_song t
-  group by t.artistid
-  order by countRecordedTracks desc
-), artist r where r.id = artistid and r.gender = 'Female' and r.areaid is not null) UNION
-(select r.name , r.areaid from
-( select t.artistid , count(*) as countRecordedTracks
-  from artist_song t
-  group by t.artistid
-  order by countRecordedTracks desc
-), artist r where r.id = artistid and r.type = 'Group' and r.areaid is not null)) t2
-where t1.id = t2.areaid;
-
+-- QUERY H 
+--print top female for each area that has more than 30 artists
+SELECT m1.name,
+       m2.name
+FROM (SELECT
+               b.name,
+               a.areaid,
+               a.crt,
+               rank() over (partition by a.areaid order by a.crt desc) rnk
+          FROM artist b,
+              (select artid, areaid, crt
+              from 
+               (select t1.artistid as artid, count(*) as crt
+                 from artist_song t1
+                 group by t1.artistid
+                 order by crt DESC), artist
+              where artid = id ) a
+         WHERE b.gender = 'Female' and a.artid = b.id) m1, area m2
+ WHERE m1.areaid= m2.id and m1.rnk = 1 and areaid in
+                      (select distinct areaid
+                      from (select artist.areaid as areaid, count(distinct artist.name) as cnt
+                            from artist
+                            where artist.areaid is not null
+                            group by artist.areaid)
+                      where cnt > 29);
+                      
+--print top male for each area that has more than 30 artists
+SELECT m1.name,
+       m2.name
+FROM (SELECT
+               b.name,
+               a.areaid,
+               a.crt,
+               rank() over (partition by a.areaid order by a.crt desc) rnk
+          FROM artist b,
+              (select artid, areaid, crt
+              from 
+               (select t1.artistid as artid, count(*) as crt
+                 from artist_song t1
+                 group by t1.artistid
+                 order by crt DESC), artist
+              where artid = id ) a
+         WHERE b.gender = 'Male' and a.artid = b.id) m1, area m2
+ WHERE m1.areaid= m2.id and m1.rnk = 1 and areaid in
+                      (select distinct areaid
+                      from (select artist.areaid as areaid, count(distinct artist.name) as cnt
+                            from artist
+                            where artist.areaid is not null
+                            group by artist.areaid)
+                      where cnt > 29);
+                      
+--print top groups for each area that has more than 30 artists
+SELECT m1.name,
+       m2.name
+FROM (SELECT
+               b.name,
+               a.areaid,
+               a.crt,
+               rank() over (partition by a.areaid order by a.crt desc) rnk
+          FROM artist b,
+              (select artid, areaid, crt
+              from 
+               (select t1.artistid as artid, count(*) as crt
+                 from artist_song t1
+                 group by t1.artistid
+                 order by crt DESC), artist
+              where artid = id ) a
+         WHERE b.type = 'Other' and a.artid = b.id) m1, area m2
+ WHERE m1.areaid= m2.id and m1.rnk = 1 and areaid in
+                      (select distinct areaid
+                      from (select artist.areaid as areaid, count(distinct artist.name) as cnt
+                            from artist
+                            where artist.areaid is not null
+                            group by artist.areaid)
+                      where cnt > 29);
+--
 ---------------------------------------------------------------------------------------------------------------------
 
 -- QUERY K
