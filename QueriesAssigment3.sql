@@ -79,21 +79,6 @@ FROM (SELECT
 -- QUERY K
 --List all genres that have no female artists, all genres that have no male artists and all genres that have no groups. 
 
--- no female
-select g.name 
-from genre G , artist A, artist_genre AG
-where a.id = ag.artistid and ag.genreid = g.id and a.gender != 'Female';
-
--- no male
-select g.name 
-from genre G , artist A, artist_genre AG
-where a.id = ag.artistid and ag.genreid = g.id and a.gender != 'Male';
-
--- no Group
-select g.name 
-from genre G , artist A, artist_genre AG
-where a.id = ag.artistid and ag.genreid = g.id and a.type != 'Group';
-
 --Alternative for Query K: 
 -- no female
 select distinct g1.name
