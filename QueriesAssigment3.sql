@@ -244,6 +244,15 @@ select name, cnt
   order by cnt DESC)
 where rownum<=5;
 ---------------------------------------------------------------------------------------------------------------------
+--Query R
+select * from (
+select  t3.artistid, count(distinct trackid) as cnt, count(distinct mediumid) as cnm
+from track t2, artist_song t3
+where t3.trackid = t2.id
+group by t3.artistid
+order by (cnt/cnm) DESC) 
+where rownum<11;
+---------------------------------------------------------------------------------------------------------------------
 --Query S
 
 select id, avs FROM
