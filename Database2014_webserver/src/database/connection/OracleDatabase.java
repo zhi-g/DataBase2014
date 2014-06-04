@@ -48,6 +48,7 @@ public enum OracleDatabase {
 	 * Groups
 	 */
 	public String queryB1() throws SQLException {
+		System.out.println("Begin B1");
 		if (null == mConnection) {
 			return null;
 		}
@@ -82,6 +83,7 @@ public enum OracleDatabase {
 	 * Males
 	 */
 	public String queryB2() throws SQLException {
+		System.out.println("Begin B2");
 		if (null == mConnection) {
 			return null;
 		}
@@ -116,6 +118,7 @@ public enum OracleDatabase {
 	 * Females
 	 */
 	public String queryB3() throws SQLException {
+		System.out.println("Begin B3");
 		if (null == mConnection) {
 			return null;
 		}
@@ -150,6 +153,7 @@ public enum OracleDatabase {
 	 * names of 10 groups with the most recorded tracks
 	 */
 	public String queryC() throws SQLException {
+		System.out.println("Begin C");
 		if (null == mConnection) {
 			return null;
 		}
@@ -182,6 +186,7 @@ public enum OracleDatabase {
 	}
 
 	public String queryD() throws SQLException {
+		System.out.println("Begin D");
 		if (null == mConnection) {
 			return null;
 		}
@@ -191,7 +196,7 @@ public enum OracleDatabase {
 		Statement stmt = null;
 		String query = "select * from ("
 				+ " select a.name from"
-				+ " (select art.artistid, count(distinct a1.releasename) as countRecordings"
+				+ " (select art.artistid, count(distinct a1.releaseid) as countRecordings"
 				+ " from album a1, track t, artist_song art"
 				+ " where art.trackid = t.id and t.recordingid = a1.id"
 				+ " group by art.artistid"
@@ -217,6 +222,7 @@ public enum OracleDatabase {
 	}
 
 	public String queryE() throws SQLException {
+		System.out.println("Begin E");
 		if (null == mConnection) {
 			return null;
 		}
@@ -247,6 +253,7 @@ public enum OracleDatabase {
 	}
 
 	public String queryF() throws SQLException {
+		System.out.println("Begin F");
 		if (null == mConnection) {
 			return "<p>An error occured.</p>";
 		}
@@ -283,6 +290,7 @@ public enum OracleDatabase {
 	}
 
 	public String queryG() throws SQLException {
+		System.out.println("Begin G");
 		if (null == mConnection) {
 			return "<p>An error occured.</p>";
 		}

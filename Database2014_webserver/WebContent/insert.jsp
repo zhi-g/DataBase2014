@@ -30,13 +30,48 @@
 			%>
 			<h1>Insertion query</h1>
 			<form action="insert.jsp" method="POST">
-				<textarea rows="10" cols="80" name="query"
-					placeholder="Type your insertion query here."></textarea>
+				<%
+					if (null != query) {
+						out.print("<textarea rows=\"10\" cols=\"80\" name=\"query\" placeholder=\"Type your insertion query here.\">"
+								+ query + "</textarea>");
+					} else {
+
+						out.print("<textarea rows=\"10\" cols=\"80\" name=\"query\" placeholder=\"Type your insertion query here.\"></textarea>");
+					}
+				%>
 				<br />
 				<button type="submit" value="Submit">Submit</button>
 			</form>
-			<br />
-			<br />
+			<h1>Queries</h1>
+				<p>
+					INSERT INTO Album (id,format,releasename,releaseid)<br /> VALUES
+					(value1,value2,value3,value4);
+				</p>
+				<p>
+					INSERT INTO Album (id,format,releasename,releaseid)<br /> VALUES
+					(value1,value2,value3,value4);
+				</p>
+				<p>
+					INSERT INTO Area (id,name,type)<br /> VALUES
+					(value1,value2,value3);
+				</p>
+				<p>
+					INSERT INTO Artist (id,name,type,gender,areaid)<br /> VALUES
+					(value1,value2,value3,value4,value5);
+				</p>
+				<p>
+					INSERT INTO Artist_Genre (artistid,genreid)<br /> VALUES
+					(value1,value2);
+				</p>
+				<p>
+					INSERT INTO Track (recordingid, mediumid, position)<br /> VALUES ()
+				</p>
+				<p>
+					INSERT INTO Artist_song (artistid, trackid)<br /> VALUES ()
+				</p>
+				<p>
+					INSERT INTO Artist_genre (artistid, genreid)<br /> VALUES ()
+				</p>
 		</div>
 	</div>
 	<%@ include file="footer.jsp"%>
