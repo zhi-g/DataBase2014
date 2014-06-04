@@ -1,0 +1,4 @@
+INSERT INTO Track (recordingid, mediumid, position) VALUES ()
+INSERT INTO Artist_song (artistid, trackid) VALUES ()
+INSERT INTO Artist_genre (artistid, genreid) VALUES ()
+
